@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function Login() {
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [enable, setEnabled] = useState(true);
@@ -17,6 +19,7 @@ export default function Login() {
   console.log(enable);
   const handleClick = () => {
     localStorage.setItem('user', JSON.stringify({ email }));
+    history.push('Meals');
   };
   return (
     <div>
