@@ -14,12 +14,9 @@ export default function Login() {
     };
     validator();
   }, [email, password]);
-  console.log(email);
-  console.log(password);
-  console.log(enable);
   const handleClick = () => {
     localStorage.setItem('user', JSON.stringify({ email }));
-    history.push('Meals');
+    history.push('meals');
   };
   return (
     <div>
