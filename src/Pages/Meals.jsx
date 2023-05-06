@@ -1,4 +1,5 @@
 import { useContext, useEffect } from 'react';
+import Footer from '../components/Footer';
 import Recipes from '../components/Recipes';
 import Header from '../components/Header';
 import { searchBarContext } from '../Context/SearchBarProvider';
@@ -13,7 +14,6 @@ export default function Meals() {
       const data = await response.json();
       if (data.meals.length > MAGIC) {
         const arraySliced = data.meals.slice(0, MAGIC);
-        console.log(arraySliced);
         setApiData(arraySliced);
         return;
       }
@@ -26,6 +26,7 @@ export default function Meals() {
     <>
       <Header title="Meals" showSearchIcon />
       <Recipes string="Meal" />
+      <Footer />
     </>
   );
 }

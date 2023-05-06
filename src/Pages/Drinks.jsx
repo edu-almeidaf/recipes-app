@@ -1,4 +1,5 @@
 import { useContext, useEffect } from 'react';
+import Footer from '../components/Footer';
 import Recipes from '../components/Recipes';
 import Header from '../components/Header';
 import { searchBarContext } from '../Context/SearchBarProvider';
@@ -25,6 +26,7 @@ export default function Drinks() {
     <>
       <Header title="Drinks" showSearchIcon />
       <Recipes string="Drink" />
+      <Footer />
     </>
   );
 }
