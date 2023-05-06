@@ -12,15 +12,33 @@ export default function SearchBar() {
   const history = useHistory();
   const { location } = history;
 
-  const redirectToMealDetailsPage = (data) => {
-    if (data.meals.length === 1) {
-      history.push(`/meals/${data.meals[0].idMeal}`);
+  const SLICE_MAGIC = 12;
+
+  const redirectToDetailsPage = (data, route, id) => {
+    if (data.length === 1) {
+      history.push(`/${route}/${data[0][id]}`);
     }
   };
 
-  const redirectToDrinkDetailsPage = (data) => {
-    if (data.drinks.length === 1) {
-      history.push(`/drinks/${data.drinks[0].idDrink}`);
+  const verifyArrayToSlice = (data) => {
+    if (data.length > SLICE_MAGIC) {
+      const arraySliced = data.slice(0, SLICE_MAGIC);
+      return arraySliced;
+    }
+    return data;
+  };
+
+  const arrayHandling = (data, string) => {
+    if (data[string] === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      return;
+    }
+    const recipeArray = verifyArrayToSlice(data[string]);
+    setApiData(recipeArray);
+    if (string === 'meals') {
+      redirectToDetailsPage(recipeArray, 'meals', 'idMeal');
+    } else {
+      redirectToDetailsPage(recipeArray, 'drinks', 'idDrink');
     }
   };
 
@@ -35,12 +53,10 @@ export default function SearchBar() {
     let data = {};
     if (location.pathname === '/meals') {
       data = await fetchMealApi(searchInput, searchInformationRadio);
-      setApiData(data.meals);
-      redirectToMealDetailsPage(data);
+      arrayHandling(data, 'meals');
     } else if (location.pathname === '/drinks') {
       data = await fetchCocktailApi(searchInput, searchInformationRadio);
-      setApiData(data.drinks);
-      redirectToDrinkDetailsPage(data);
+      arrayHandling(data, 'drinks');
     }
   };
 

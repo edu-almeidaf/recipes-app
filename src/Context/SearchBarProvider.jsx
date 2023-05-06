@@ -4,8 +4,7 @@ import { createContext, useMemo, useState } from 'react';
 export const searchBarContext = createContext();
 
 export default function SearchBarProvider({ children }) {
-  const [apiData, setApiData] = useState({});
-  console.log(apiData);
+  const [apiData, setApiData] = useState([]);
 
   const values = useMemo(() => ({
     apiData,

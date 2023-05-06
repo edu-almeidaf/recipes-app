@@ -6,7 +6,7 @@ export default function Meals() {
   return (
     <>
       <SearchBar />
-      <RecipesList />
+      <RecipesList string="Meals" />
     </>
   );
 }

@@ -1,8 +1,12 @@
 import React from 'react';
 import SearchBar from '../components/SearchBar';
+import RecipesList from '../components/RecipesList';
 
 export default function Drinks() {
   return (
-    <SearchBar />
+    <>
+      <SearchBar />
+      <RecipesList string="Drink" />
+    </>
   );
 }
