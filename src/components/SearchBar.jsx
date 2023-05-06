@@ -54,7 +54,7 @@ export default function SearchBar() {
     if (location.pathname === '/meals') {
       data = await fetchMealApi(searchInput, searchInformationRadio);
       arrayHandling(data, 'meals');
-    } else if (location.pathname === '/drinks') {
+    } else {
       data = await fetchCocktailApi(searchInput, searchInformationRadio);
       arrayHandling(data, 'drinks');
     }

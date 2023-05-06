@@ -1,11 +1,11 @@
 import React from 'react';
-import SearchBar from '../components/SearchBar';
 import RecipesList from '../components/RecipesList';
+import Header from '../components/Header';
 
 export default function Drinks() {
   return (
     <>
-      <SearchBar />
+      <Header title="Drinks" showSearchIcon />
       <RecipesList string="Drink" />
     </>
   );
