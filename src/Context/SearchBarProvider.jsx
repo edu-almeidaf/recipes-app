@@ -1,33 +1,24 @@
-// import PropTypes from 'prop-types';
-// import { createContext, useEffect, useMemo, useState } from 'react';
-// // import useFetch from '../hooks/useFetch';
-// import { fetchMealApi } from '../services/fetchMealApi';
+import PropTypes from 'prop-types';
+import { createContext, useMemo, useState } from 'react';
 
-// const searchBarContext = createContext();
+export const searchBarContext = createContext();
 
-// export default function SearchBarProvider({ children }) {
-//   const [searchData, setsearchData] = useState({});
+export default function SearchBarProvider({ children }) {
+  const [apiData, setApiData] = useState({});
+  console.log(apiData);
 
-//   useEffect(() => {
+  const values = useMemo(() => ({
+    apiData,
+    setApiData,
+  }), [setApiData, apiData]);
 
-//   });
+  return (
+    <searchBarContext.Provider value={ values }>
+      { children }
+    </searchBarContext.Provider>
+  );
+}
 
-//   const fetchRecipesApi = useCallBack(async () => {
-//     const apiData = await
-//   });
-
-//   const values = useMemo(() => ({
-//     searchData,
-//     fetchRecipesApi,
-//   }), [searchData, fetchRecipesApi]);
-
-//   return (
-//     <searchBarContext.Provider value={ values }>
-//       { children }
-//     </searchBarContext.Provider>
-//   );
-// }
-
-// SearchBarProvider.propTypes = {
-//   children: PropTypes.node.isRequired,
-// };
+SearchBarProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

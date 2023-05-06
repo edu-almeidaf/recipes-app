@@ -1,25 +1,47 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { fetchCocktailApi, fetchMealApi } from '../services/fetchMealApi';
+import { fetchMealApi, fetchCocktailApi } from '../services/fetchRecipesApi';
+import { searchBarContext } from '../Context/SearchBarProvider';
 
 export default function SearchBar() {
   const [searchInput, setSearchInput] = useState('');
   const [searchInformationRadio, setSearchInformationRadio] = useState('');
-  const { location } = useHistory();
+
+  const { setApiData } = useContext(searchBarContext);
+
+  const history = useHistory();
+  const { location } = history;
+
+  const redirectToMealDetailsPage = (data) => {
+    if (data.meals.length === 1) {
+      history.push(`/meals/${data.meals[0].idMeal}`);
+    }
+  };
+
+  const redirectToDrinkDetailsPage = (data) => {
+    if (data.drinks.length === 1) {
+      history.push(`/drinks/${data.drinks[0].idDrink}`);
+    }
+  };
 
   const handleSearchSubmit = async (event) => {
     event.preventDefault();
+
     if (searchInformationRadio === 'firstLetter' && searchInput.length > 1) {
       global.alert('Your search must have only 1 (one) character');
       return;
     }
-    let apiData = {};
+
+    let data = {};
     if (location.pathname === '/meals') {
-      apiData = await fetchMealApi(searchInput, searchInformationRadio);
+      data = await fetchMealApi(searchInput, searchInformationRadio);
+      setApiData(data.meals);
+      redirectToMealDetailsPage(data);
     } else if (location.pathname === '/drinks') {
-      apiData = await fetchCocktailApi(searchInput, searchInformationRadio);
+      data = await fetchCocktailApi(searchInput, searchInformationRadio);
+      setApiData(data.drinks);
+      redirectToDrinkDetailsPage(data);
     }
-    console.log(apiData);
   };
 
   return (
