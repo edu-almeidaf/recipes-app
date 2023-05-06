@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SearchBar from '../components/SearchBar';
 
-export default class Meals extends Component {
-  render() {
-    return (
-      <SearchBar />
-    );
-  }
+export default function Meals() {
+  return (
+    <SearchBar />
+  );
 }

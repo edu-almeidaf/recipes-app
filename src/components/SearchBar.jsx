@@ -1,11 +1,29 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { fetchCocktailApi, fetchMealApi } from '../services/fetchMealApi';
 
 export default function SearchBar() {
   const [searchInput, setSearchInput] = useState('');
   const [searchInformationRadio, setSearchInformationRadio] = useState('');
+  const { location } = useHistory();
+
+  const handleSearchSubmit = async (event) => {
+    event.preventDefault();
+    if (searchInformationRadio === 'firstLetter' && searchInput.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
+      return;
+    }
+    let apiData = {};
+    if (location.pathname === '/meals') {
+      apiData = await fetchMealApi(searchInput, searchInformationRadio);
+    } else if (location.pathname === '/drinks') {
+      apiData = await fetchCocktailApi(searchInput, searchInformationRadio);
+    }
+    console.log(apiData);
+  };
 
   return (
-    <form className="SearchBar">
+    <form className="SearchBar" onSubmit={ handleSearchSubmit }>
       <input
         type="text"
         name="searchInput"
