@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header({ title, showSearchIcon }) {
   const [toggleSearchBar, setToggleSearchBar] = useState(false);
@@ -41,12 +42,12 @@ function Header({ title, showSearchIcon }) {
           </button>
         )
       }
+      <h1 data-testid="page-title">{title}</h1>
       {
         toggleSearchBar && (
-          <input type="search" data-testid="search-input" />
+          <SearchBar />
         )
       }
-      <h1 data-testid="page-title">{title}</h1>
     </>
   );
 }
