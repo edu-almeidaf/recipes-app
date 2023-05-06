@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { searchBarContext } from '../Context/SearchBarProvider';
 
-export default function RecipesList({ string }) {
+export default function Recipes({ string }) {
   const { apiData } = useContext(searchBarContext);
   return (
     <div className="recipes-container">
@@ -22,6 +22,6 @@ export default function RecipesList({ string }) {
   );
 }
 
-RecipesList.propTypes = {
+Recipes.propTypes = {
   string: PropTypes.string.isRequired,
 };
