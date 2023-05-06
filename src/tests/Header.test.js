@@ -3,6 +3,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import Header from '../components/Header';
+import renderWithRouter from './helpers/renderWithRouter';
+import App from '../App';
 
 describe('Testa se o componente Header:', () => {
   it('renderiza corretamente;', () => {
@@ -39,12 +41,7 @@ describe('Testa se o componente Header:', () => {
   });
 
   it('mostra e esconde o search input ao clicar no botão correspondente.', () => {
-    const PROPS = {
-      title: 'title',
-      showSearchIcon: true,
-    };
-
-    render(<Header title={ PROPS.title } showSearchIcon />);
+    renderWithRouter(<App />, '/meals');
 
     const searchButton = screen.getByTestId('search-top-btn');
     fireEvent.click(searchButton);

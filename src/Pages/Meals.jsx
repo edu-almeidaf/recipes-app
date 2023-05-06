@@ -1,13 +1,14 @@
 import Footer from '../components/Footer';
+import React from 'react';
+import Recipes from '../components/Recipes';
 import Header from '../components/Header';
 
-function Meals() {
+export default function Meals() {
   return (
-    <div>
+    <>
       <Header title="Meals" showSearchIcon />
+      <Recipes string="Meal" />
       <Footer />
-    </div>
+    </>
   );
 }
-
-export default Meals;
