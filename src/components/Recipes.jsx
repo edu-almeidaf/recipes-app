@@ -36,7 +36,7 @@ export default function Recipes({ string }) {
     };
 
     getCategories();
-  }, []);
+  }, [location.pathname, setApiData]);
 
   const resetFilters = async () => {
     const data = await fetchAllRecipes(location.pathname);
