@@ -47,7 +47,7 @@ function RecipeDetailsMeals() {
           alt={ recipe.strMeal }
         />
         <h2 data-testid="recipe-category">{recipe.strCategory}</h2>
-        <h3>Ingredients</h3>
+        <h3>Ingredientes</h3>
         <ul>
           { ingredients.map((item, index) => (
             <li
