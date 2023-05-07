@@ -5,6 +5,7 @@ import { searchBarContext } from '../Context/SearchBarProvider';
 import { fetchCategories } from '../services/fetchCategories';
 import CategoryButton from './CategoryButton';
 import { fetchAllRecipes } from '../services/fetchRecipesApi';
+import '../styles/Recipes.css';
 
 export default function Recipes({ string }) {
   const [categories, setCategories] = useState([]);
@@ -12,29 +13,38 @@ export default function Recipes({ string }) {
   const history = useHistory();
   const { location } = history;
 
+  const MAGIC_CATEGORIES = 5;
+  const MAGIC_RECIPES = 12;
+
   useEffect(() => {
     const getCategories = async () => {
-      const data = await fetchCategories(location.pathname);
-      const MAGIC = 5;
-      let categoryArraySliced;
-      if (data.meals) {
-        categoryArraySliced = data.meals.slice(0, MAGIC);
+      const categoryData = await fetchCategories(location.pathname);
+      const recipeData = await fetchAllRecipes(location.pathname);
+
+      let categoryArraySliced = [];
+      let recipeArraySliced = [];
+
+      if (categoryData.meals) {
+        categoryArraySliced = categoryData.meals.slice(0, MAGIC_CATEGORIES);
+        recipeArraySliced = recipeData.meals.slice(0, MAGIC_RECIPES);
       } else {
-        categoryArraySliced = data.drinks.slice(0, MAGIC);
+        categoryArraySliced = categoryData.drinks.slice(0, MAGIC_CATEGORIES);
+        recipeArraySliced = recipeData.drinks.slice(0, MAGIC_RECIPES);
       }
       setCategories(categoryArraySliced);
+      setApiData(recipeArraySliced);
     };
+
     getCategories();
   }, []);
 
   const resetFilters = async () => {
     const data = await fetchAllRecipes(location.pathname);
-    const MAGIC = 12;
     let arraySliced = [];
     if (data.meals) {
-      arraySliced = data.meals.slice(0, MAGIC);
+      arraySliced = data.meals.slice(0, MAGIC_RECIPES);
     } else {
-      arraySliced = data.drinks.slice(0, MAGIC);
+      arraySliced = data.drinks.slice(0, MAGIC_RECIPES);
     }
     setApiData(arraySliced);
   };
@@ -61,14 +71,21 @@ export default function Recipes({ string }) {
       <div className="recipes-container">
         {
           apiData.map((recipe, index) => (
-            <div data-testid={ `${index}-recipe-card` } key={ recipe[`id${string}`] }>
+            <button
+              data-testid={ `${index}-recipe-card` }
+              key={ recipe[`id${string}`] }
+              onClick={
+                () => history.push(`${location.pathname}/${recipe[`id${string}`]}`)
+              }
+            >
               <h3 data-testid={ `${index}-card-name` }>{ recipe[`str${string}`] }</h3>
               <img
                 src={ recipe[`str${string}Thumb`] }
                 alt={ recipe[`str${string}`] }
+                className="card-recipe-img"
                 data-testid={ `${index}-card-img` }
               />
-            </div>
+            </button>
           ))
         }
       </div>
