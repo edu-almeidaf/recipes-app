@@ -10,26 +10,26 @@ function RecipeDetailsDrinks() {
 
   const { id } = useParams();
 
-  const fetchRecipe = async () => {
-    const teste = await fetchDrink(id);
-    const drinksFetch = teste.drinks[0];
-    setRecipe(drinksFetch);
-    const ingredientsArray = [];
-    for (let index = 1; index <= NUMBER_OF_INGREDIENTS; index += 1) {
-      if (drinksFetch[`strIngredient${index}`]) {
-        ingredientsArray.push({
-          ingredient: drinksFetch[`strIngredient${index}`],
-          measure: drinksFetch[`strMeasure${index}`],
-        });
-      }
-    }
-    setIngredients(ingredientsArray);
-  };
-
   useEffect(() => {
+    const fetchRecipe = async () => {
+      const teste = await fetchDrink(id);
+      const drinksFetch = teste.drinks[0];
+      setRecipe(drinksFetch);
+      const ingredientsArray = [];
+      for (let index = 1; index <= NUMBER_OF_INGREDIENTS; index += 1) {
+        if (drinksFetch[`strIngredient${index}`]) {
+          ingredientsArray.push({
+            ingredient: drinksFetch[`strIngredient${index}`],
+            measure: drinksFetch[`strMeasure${index}`],
+          });
+        }
+      }
+      setIngredients(ingredientsArray);
+    };
+
     fetchRecipe();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
+
   return (
     <div>
 

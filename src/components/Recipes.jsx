@@ -36,8 +36,7 @@ export default function Recipes({ string }) {
     };
 
     getCategories();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location.pathname, setApiData]);
 
   const resetFilters = async () => {
     const data = await fetchAllRecipes(location.pathname);

@@ -10,26 +10,25 @@ function RecipeDetailsMeals() {
 
   const { id } = useParams();
 
-  const fetchRecipe = async () => {
-    const teste = await fetchMeal(id);
-    const mealsFetch = teste.meals[0];
-    setRecipe(mealsFetch);
-    const ingredientsArray = [];
-    for (let index = 1; index <= NUMBER_OF_INGREDIENTS; index += 1) {
-      if (mealsFetch[`strIngredient${index}`]) {
-        ingredientsArray.push({
-          ingredient: mealsFetch[`strIngredient${index}`],
-          measure: mealsFetch[`strMeasure${index}`],
-        });
-      }
-    }
-    setIngredients(ingredientsArray);
-  };
-
   useEffect(() => {
+    const fetchRecipe = async () => {
+      const teste = await fetchMeal(id);
+      const mealsFetch = teste.meals[0];
+      setRecipe(mealsFetch);
+      const ingredientsArray = [];
+      for (let index = 1; index <= NUMBER_OF_INGREDIENTS; index += 1) {
+        if (mealsFetch[`strIngredient${index}`]) {
+          ingredientsArray.push({
+            ingredient: mealsFetch[`strIngredient${index}`],
+            measure: mealsFetch[`strMeasure${index}`],
+          });
+        }
+      }
+      setIngredients(ingredientsArray);
+    };
+
     fetchRecipe();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
 
   const cleanYoutubeUrl = (url) => {
     console.log(url);
