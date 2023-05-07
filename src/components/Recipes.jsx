@@ -36,6 +36,7 @@ export default function Recipes({ string }) {
     };
 
     getCategories();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const resetFilters = async () => {
