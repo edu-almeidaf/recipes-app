@@ -27,6 +27,10 @@ describe('Testes do componente SearchBar', () => {
     it('Verifica se ao pesquisar uma receita pelo ingrediente, são renderizadas 12 receitas na tela', async () => {
       renderWithRouter(<App />, '/meals');
 
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('Corba');
+      });
+
       const searchButton = screen.getByTestId(searchTopBtn);
       userEvent.click(searchButton);
 
@@ -38,17 +42,19 @@ describe('Testes do componente SearchBar', () => {
       fireEvent.click(radioOption);
       userEvent.click(searchBtn);
 
-      const title1El = await screen.findByTestId(cardTestIds.cardName0);
-      expect(title1El).toHaveTextContent('Baingan Bharta');
-
-      const title12El = screen.getByTestId(cardTestIds.cardName11);
-      expect(title12El).toHaveTextContent('Cevapi Sausages');
-
-      expect(screen.queryByTestId(cardTestIds.cardName12)).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('Baingan Bharta');
+        expect(screen.getByTestId(cardTestIds.cardName11)).toHaveTextContent('Cevapi Sausages');
+        expect(screen.queryByTestId(cardTestIds.cardName12)).not.toBeInTheDocument();
+      });
     });
 
     it('Verifica se ao pesquisar uma receita pelo nome, se o array tiver somente 1 elemento, ele redireciona para a página de detalhes da receita', async () => {
       const { history } = renderWithRouter(<App />, '/meals');
+
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('Corba');
+      });
 
       const searchButton = screen.getByTestId(searchTopBtn);
       userEvent.click(searchButton);
@@ -69,6 +75,10 @@ describe('Testes do componente SearchBar', () => {
     it('Verifica se ao pesquisar uma receita pela primeira letra, as receitas aparecem na tela', async () => {
       renderWithRouter(<App />, '/meals');
 
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('Corba');
+      });
+
       const searchButton = screen.getByTestId(searchTopBtn);
       userEvent.click(searchButton);
 
@@ -80,11 +90,10 @@ describe('Testes do componente SearchBar', () => {
       fireEvent.click(radioOption);
       userEvent.click(searchBtn);
 
-      const title1El = await screen.findByTestId(cardTestIds.cardName0);
-      expect(title1El).toHaveTextContent('Apple Frangipan Tart');
-
-      const title12El = screen.getByTestId(cardTestIds.cardName1);
-      expect(title12El).toHaveTextContent('Apple & Blackberry Crumble');
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('Apple Frangipan Tart');
+        expect(screen.getByTestId(cardTestIds.cardName1)).toHaveTextContent('Apple & Blackberry Crumble');
+      });
     });
   });
 
@@ -96,6 +105,10 @@ describe('Testes do componente SearchBar', () => {
     it('Verifica se ao pesquisar uma receita e ela retornar um array vazio, é exibido um alert na tela', async () => {
       const spy = jest.spyOn(window, 'alert');
       renderWithRouter(<App />, '/meals');
+
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('Corba');
+      });
 
       const searchButton = screen.getByTestId(searchTopBtn);
       userEvent.click(searchButton);
@@ -116,6 +129,10 @@ describe('Testes do componente SearchBar', () => {
     it('Verifica se ao pesquisar uma receita pela primeira letra, mas com 2 letras no input, um alert é exibido na tela', async () => {
       const spy = jest.spyOn(window, 'alert');
       renderWithRouter(<App />, '/meals');
+
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('Corba');
+      });
 
       const searchButton = screen.getByTestId(searchTopBtn);
       userEvent.click(searchButton);
@@ -139,6 +156,10 @@ describe('Testes do componente SearchBar', () => {
     it('Verifica se ao pesquisar uma receita pelo ingrediente, são renderizadas 12 receitas na tela', async () => {
       renderWithRouter(<App />, '/drinks');
 
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('GG');
+      });
+
       const searchButton = screen.getByTestId(searchTopBtn);
       userEvent.click(searchButton);
 
@@ -150,17 +171,19 @@ describe('Testes do componente SearchBar', () => {
       fireEvent.click(radioOption);
       userEvent.click(searchBtn);
 
-      const title1El = await screen.findByTestId(cardTestIds.cardName0);
-      expect(title1El).toHaveTextContent('3-Mile Long Island Iced Tea');
-
-      const title12El = screen.getByTestId(cardTestIds.cardName11);
-      expect(title12El).toHaveTextContent('Angel Face');
-
-      expect(screen.queryByTestId(cardTestIds.cardName12)).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('3-Mile Long Island Iced Tea');
+        expect(screen.getByTestId(cardTestIds.cardName11)).toHaveTextContent('Angel Face');
+        expect(screen.queryByTestId(cardTestIds.cardName12)).not.toBeInTheDocument();
+      });
     });
 
     it('Verifica se ao pesquisar uma receita pelo nome, se o array tiver somente 1 elemento, ele redireciona para a página de detalhes da receita', async () => {
       const { history } = renderWithRouter(<App />, '/drinks');
+
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('GG');
+      });
 
       const searchButton = screen.getByTestId(searchTopBtn);
       userEvent.click(searchButton);
@@ -181,6 +204,10 @@ describe('Testes do componente SearchBar', () => {
     it('Verifica se ao pesquisar uma receita pela primeira letra, as receitas aparecem na tela', async () => {
       renderWithRouter(<App />, '/drinks');
 
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('GG');
+      });
+
       const searchButton = screen.getByTestId(searchTopBtn);
       userEvent.click(searchButton);
 
@@ -192,11 +219,10 @@ describe('Testes do componente SearchBar', () => {
       fireEvent.click(radioOption);
       userEvent.click(searchBtn);
 
-      const title1El = await screen.findByTestId(cardTestIds.cardName0);
-      expect(title1El).toHaveTextContent('A1');
-
-      const title12El = screen.getByTestId(cardTestIds.cardName1);
-      expect(title12El).toHaveTextContent('ABC');
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('A1');
+        expect(screen.getByTestId(cardTestIds.cardName1)).toHaveTextContent('ABC');
+      });
     });
   });
 });

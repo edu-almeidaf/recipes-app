@@ -29,3 +29,13 @@ export const fetchCocktailApi = async (searchInput, searchInformationRadio) => {
   }
   return response.json();
 };
+
+export const fetchAllRecipes = async (page) => {
+  let response = [];
+  if (page === '/meals') {
+    response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  } else {
+    response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+  }
+  return response.json();
+};
