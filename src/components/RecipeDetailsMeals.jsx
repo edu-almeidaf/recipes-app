@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { fetchMeal } from '../tests/helpers/ApiRecipeDetails';
+import BtnStartRecipe from './BtnStartRecipe';
 
 const NUMBER_OF_INGREDIENTS = 20;
 
@@ -68,7 +69,7 @@ function RecipeDetailsMeals() {
           title="video"
         />}
       </div>
-
+      <BtnStartRecipe />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { fetchDrink } from '../tests/helpers/ApiRecipeDetails';
+import BtnStartRecipe from './BtnStartRecipe';
 
 const NUMBER_OF_INGREDIENTS = 20;
 
@@ -56,7 +57,7 @@ function RecipeDetailsDrinks() {
         <h3>Instructions</h3>
         <p data-testid="instructions">{recipe.strInstructions}</p>
       </div>
-
+      <BtnStartRecipe />
     </div>
   );
 }
