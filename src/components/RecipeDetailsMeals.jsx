@@ -48,7 +48,7 @@ function RecipeDetailsMeals() {
         <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
         <ShareButton url={ url } onClick={ () => setShowMessage(true) } />
         {showMessage && <p>Link copied!</p>}
-        <FavoriteButton />
+        <FavoriteButton recipe={ recipe } />
         <img
           data-testid="recipe-photo"
           src={ recipe.strMealThumb }
