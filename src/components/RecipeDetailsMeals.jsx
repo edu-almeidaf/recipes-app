@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { fetchMeal } from '../tests/helpers/ApiRecipeDetails';
+import ShareButton from './ShareButton';
+import FavoriteButton from './FavoriteButton';
 
 const NUMBER_OF_INGREDIENTS = 20;
 
 function RecipeDetailsMeals() {
   const [recipe, setRecipe] = useState({});
   const [ingredients, setIngredients] = useState([]);
+  const [showMessage, setShowMessage] = useState(false);
 
   const { id } = useParams();
 
@@ -37,10 +40,15 @@ function RecipeDetailsMeals() {
     return urlArray[1];
   };
 
+  const url = window.location.href;
+
   return (
     <div>
       <div>
         <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
+        <ShareButton url={ url } onClick={ () => setShowMessage(true) } />
+        {showMessage && <p>Link copied!</p>}
+        <FavoriteButton />
         <img
           data-testid="recipe-photo"
           src={ recipe.strMealThumb }
