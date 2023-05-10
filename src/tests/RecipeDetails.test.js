@@ -1,104 +1,218 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-// import { act } from 'react-dom/test-utils';
+import copy from 'clipboard-copy';
 import renderWithRouter from './helpers/renderWithRouter';
-import RecipeDetailsDrinks from '../components/RecipeDetailsDrinks';
-import RecipeDetailsMeals from '../components/RecipeDetailsMeals';
+import App from '../App';
+import fetchMock from '../../cypress/mocks/fetch';
 
-const recipeTitle = 'recipe-title';
+const recipeDrinksURL = '/drinks/178319';
+const recipeMealsURL = '/meals/52771';
+const firstingredient = '0-ingredient-name-and-measure';
+const drinkRecipe = 'Hpnotiq 2 oz';
+const mealRecipe = 'penne rigate 1 pound';
+const favoriteTestid = 'favorite-btn';
+const favoriteRecipeMeals = [
+  {
+    id: '52771',
+    type: 'meal',
+    nationality: 'Italian',
+    category: 'Vegetarian',
+    alcoholicOrNot: '',
+    name: 'Spicy Arrabiata Penne',
+    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+  },
+];
 
-describe('teste do RecipeDatails drinks', () => {
-  it('testando as rota drink', async () => {
-    const { history } = renderWithRouter(<RecipeDetailsDrinks />);
-    history.push('/drinks');
+const favoriteRecipeDrinks = [
+  {
+    id: '178319',
+    type: 'drink',
+    nationality: '',
+    category: 'Cocktail',
+    alcoholicOrNot: 'Alcoholic',
+    name: 'Aquamarine',
+    image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+  },
+];
+jest.mock('clipboard-copy');
 
-    const { pathname } = history.location;
-    expect(pathname).toBe('/drinks');
-
-    const img = screen.getByTestId('recipe-photo');
-    expect(img).toBeInTheDocument();
-    const catecory = screen.getByTestId('recipe-category');
-    expect(catecory).toBeInTheDocument();
-
-    await screen.findByTestId(recipeTitle);
-    expect(screen.getByTestId(recipeTitle)).toBeInTheDocument();
-
-    const ingredientsList = screen.getByRole('list');
-    expect(ingredientsList).toBeInTheDocument();
-
-    waitFor(() => {
-      const ingredientsItems = screen.findByTestId('0-ingredient-name-and-measure');
-      expect(ingredientsItems).toBeInTheDocument();
-      expect(firstIngredient).toHaveTextContent('Ingredient 1');
-      expect(firstIngredient).toHaveTextContent('1 measure 1');
-    });
-
-    const instructions = screen.getByTestId('instructions');
-    expect(instructions).toBeInTheDocument();
+describe('teste do RecipeDetails drinks', () => {
+  beforeEach(() => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetchMock);
   });
 
-  it('testando Start Recipe e Continue Recife', async () => {
-    const { history } = renderWithRouter(<RecipeDetailsDrinks />);
-    history.push('/drinks');
+  it('Verifica se ao entrar na rota drinks, os componentes aparecem na tela ', async () => {
+    renderWithRouter(<App />, recipeDrinksURL);
+    await waitFor(() => {
+      expect(screen.getByTestId(firstingredient)).toHaveTextContent(drinkRecipe);
+    });
 
-    waitFor(() => {
-      const startRecipeBtn = screen.toHaveTextContent('Start Recipe');
-      expect(startRecipeBtn).toBeInTheDocument();
-      userEvent.click(startRecipeBtn);
+    expect(screen.getByRole('button', { name: /start recipe/i })).toBeInTheDocument();
+  });
+
+  it('testando se ao clicar no botão Start Recipe, a rota é alterada e o texto do botão é alterado para Continue Recipe', async () => {
+    const { history } = renderWithRouter(<App />, recipeDrinksURL);
+
+    await waitFor(() => {
+      expect(screen.getByTestId(firstingredient)).toHaveTextContent(drinkRecipe);
     });
-    waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/drinks');
+
+    expect(screen.queryByRole('button', { name: /continue recipe/i })).not.toBeInTheDocument();
+    const btnStart = screen.getByRole('button', { name: /start recipe/i });
+
+    userEvent.click(btnStart);
+
+    expect(history.location.pathname).toBe('/drinks/178319/in-progress');
+
+    history.push(recipeDrinksURL);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /continue recipe/i })).toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /start recipe/i })).not.toBeInTheDocument();
     });
+  });
+
+  it('testando se ao entrar na página com a receita já em andamento, o botão entra como Continue Recipe', async () => {
+    const inProgressRecipes = {
+      drinks: {
+        15997: [],
+      },
+    };
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    const { history } = renderWithRouter(<App />, recipeDrinksURL);
+
+    await waitFor(() => {
+      expect(screen.getByTestId(firstingredient)).toHaveTextContent(drinkRecipe);
+    });
+
+    const btnStart = screen.getByRole('button', { name: /start recipe/i });
+
+    userEvent.click(btnStart);
+
+    expect(history.location.pathname).toBe('/drinks/178319/in-progress');
   });
 });
 
-describe('teste do RecipeDatails drinks', () => {
-  it('testando as rota meals', async () => {
-    const { history } = renderWithRouter(<RecipeDetailsMeals />);
-    history.push('/meals');
+describe('teste do RecipeDatails meals', () => {
+  beforeEach(() => {
+    jest.spyOn(global, 'fetch').mockImplementation(fetchMock);
+  });
 
-    const { pathname } = history.location;
-    expect(pathname).toBe('/meals');
+  it('Verifica se ao entrar na rota meals, os componentes aparecem na tela ', async () => {
+    renderWithRouter(<App />, recipeMealsURL);
+    await waitFor(() => {
+      expect(screen.getByTestId(firstingredient)).toHaveTextContent(mealRecipe);
+    });
 
-    const img = screen.getByTestId('recipe-photo');
-    expect(img).toBeInTheDocument();
-    const catecory = screen.getByTestId('recipe-category');
-    expect(catecory).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /start recipe/i })).toBeInTheDocument();
+  });
 
-    const instructions = screen.getByTestId('instructions');
-    expect(instructions).toBeInTheDocument();
+  it('testando se ao clicar no botão Start Recipe, a rota é alterada e o texto do botão é alterado para Continue Recipe', async () => {
+    const { history } = renderWithRouter(<App />, recipeMealsURL);
 
-    const btnStart = screen.getByTestId('start-recipe-btn');
-    expect(btnStart).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId(firstingredient)).toHaveTextContent(mealRecipe);
+    });
 
-    await screen.findByTestId(recipeTitle);
-    expect(screen.getByTestId(recipeTitle)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /continue recipe/i })).not.toBeInTheDocument();
+    const btnStart = screen.getByRole('button', { name: /start recipe/i });
 
-    const ingredientsList = screen.getByRole('list');
-    expect(ingredientsList).toBeInTheDocument();
+    userEvent.click(btnStart);
 
-    waitFor(() => {
-      const ingredientsItems = screen.findByTestId('0-ingredient-name-and-measure');
-      expect(ingredientsItems).toBeInTheDocument();
-      expect(firstIngredient).toHaveTextContent('Ingredient 1');
-      expect(firstIngredient).toHaveTextContent('1 measure 1');
+    expect(history.location.pathname).toBe('/meals/52771/in-progress');
+
+    history.push(recipeMealsURL);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /continue recipe/i })).toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /start recipe/i })).not.toBeInTheDocument();
     });
   });
 
-  it('testando Start Recipe e Continue Recife', async () => {
-    const { history } = renderWithRouter(<RecipeDetailsMeals />);
-    history.push('/meals');
+  it('testando se ao entrar na página com a receita já já em andamento, o botão entra como Continue Recipe', async () => {
+    const inProgressRecipes = {
+      meals: {
+        52997: [],
+      },
+    };
 
-    waitFor(() => {
-      const startRecipeBtn = screen.toHaveTextContent('Start Recipe');
-      expect(startRecipeBtn).toBeInTheDocument();
-      userEvent.click(startRecipeBtn);
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    const { history } = renderWithRouter(<App />, recipeMealsURL);
+
+    await waitFor(() => {
+      expect(screen.getByTestId(firstingredient)).toHaveTextContent(mealRecipe);
     });
-    waitFor(() => {
-      const { pathname } = history.location;
-      expect(pathname).toBe('/drinks');
+
+    const btnStart = screen.getByRole('button', { name: /start recipe/i });
+
+    userEvent.click(btnStart);
+
+    expect(history.location.pathname).toBe('/meals/52771/in-progress');
+  });
+
+  it('testando se ao entrar na página com a receita finalizada, o botão não aparece', async () => {
+    const doneRecipes = [
+      {
+        id: 52771,
+      },
+    ];
+
+    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    renderWithRouter(<App />, recipeMealsURL);
+
+    console.log(JSON.parse(localStorage.getItem('doneRecipes')));
+    screen.debug();
+    expect(screen.queryByRole('button', { name: /start recipe/i })).not.toBeInTheDocument();
+  });
+
+  describe('teste dos componentes FavoriteButton e ShareButton', () => {
+    beforeEach(() => {
+      jest.spyOn(global, 'fetch').mockImplementation(fetchMock);
+    });
+
+    it('testando a funcionalidade do botão share', async () => {
+      copy.mockImplementation(() => true);
+      renderWithRouter(<App />, recipeMealsURL);
+
+      await waitFor(() => {
+        expect(screen.getByTestId(firstingredient)).toHaveTextContent(mealRecipe);
+      });
+      expect(screen.queryByText('Link copied!')).not.toBeInTheDocument();
+
+      const shareBtn = screen.getByTestId('share-btn');
+      userEvent.click(shareBtn);
+
+      expect(screen.getByText('Link copied!')).toBeInTheDocument();
+    });
+
+    it('testando se a receita é favoritada e desfavoritada na rota meals', async () => {
+      renderWithRouter(<App />, recipeMealsURL);
+
+      await waitFor(() => {
+        expect(screen.getByTestId(firstingredient)).toHaveTextContent(mealRecipe);
+      });
+
+      userEvent.click(screen.getByTestId(favoriteTestid));
+      expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toStrictEqual(favoriteRecipeMeals);
+
+      userEvent.click(screen.getByTestId(favoriteTestid));
+      expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toStrictEqual([]);
+    });
+
+    it('testando se a receita é favoritada e desfavoritada na rota drinks', async () => {
+      renderWithRouter(<App />, recipeDrinksURL);
+
+      await waitFor(() => {
+        expect(screen.getByTestId(firstingredient)).toHaveTextContent(drinkRecipe);
+      });
+
+      userEvent.click(screen.getByTestId(favoriteTestid));
+      expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toStrictEqual(favoriteRecipeDrinks);
+
+      userEvent.click(screen.getByTestId(favoriteTestid));
+      expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toStrictEqual([]);
     });
   });
 });
