@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { fetchDrink, fetchMeal } from '../services/ApiRecipeDetails';
 import BtnStartRecipe from '../components/BtnStartRecipe';
 import ShareButton from '../components/ShareButton';
 import FavoriteButton from '../components/FavoriteButton';
+import { recipeContext } from '../Context/RecipeProvider';
 
 const NUMBER_OF_INGREDIENTS = 20;
 
-function RecipeDetailsMeals() {
-  const [recipe, setRecipe] = useState({});
-  const [ingredients, setIngredients] = useState([]);
+function RecipeDetails() {
+  const [recipe, setRecipe, ingredients, setIngredients] = useContext(recipeContext);
+
   const [showMessage, setShowMessage] = useState(false);
   const [pageWord, setPageWord] = useState('');
 
@@ -74,6 +75,7 @@ function RecipeDetailsMeals() {
   };
 
   const handleDrinksLocalStorage = (inProgressRecipes) => {
+    console.log(recipe);
     let newInProgressRecipes = {};
     if (inProgressRecipes && inProgressRecipes.drinks) {
       newInProgressRecipes = {
@@ -95,7 +97,6 @@ function RecipeDetailsMeals() {
   };
 
   const url = window.location.href;
-  console.log(url);
 
   const handleNameStartContinue = () => {
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -152,4 +153,4 @@ function RecipeDetailsMeals() {
   );
 }
 
-export default RecipeDetailsMeals;
+export default RecipeDetails;
