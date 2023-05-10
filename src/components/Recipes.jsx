@@ -75,7 +75,6 @@ export default function Recipes({ string }) {
               data-testid={ `${index}-recipe-card` }
               key={ recipe[`id${string}`] }
               onClick={ () => {
-                localStorage.setItem('doneRecipes', JSON.stringify([{ id: 52977 }]));
                 history.push(`${location.pathname}/${recipe[`id${string}`]}`);
               } }
             >
