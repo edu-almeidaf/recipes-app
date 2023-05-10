@@ -3,7 +3,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './helpers/renderWithRouter';
 import App from '../App';
-import { mealsLinkVerification, drinksLinkVerification } from './helpers/fetchRecipesVerification';
+import fetchMock from '../../cypress/mocks/fetch';
 
 const cardName0 = '0-card-name';
 const cardName11 = '11-card-name';
@@ -12,7 +12,7 @@ const cardName12 = '12-card-name';
 describe('Testes do componente Recipes', () => {
   describe('Testa as funcionalidades do componente Recipes na rota /meals', () => {
     beforeEach(() => {
-      jest.spyOn(global, 'fetch').mockImplementation(mealsLinkVerification);
+      jest.spyOn(global, 'fetch').mockImplementation(fetchMock);
     });
     test('Ao renderizar o componente, os cards dos produtos aparecem na tela', async () => {
       renderWithRouter(<App />, '/meals');
@@ -21,7 +21,7 @@ describe('Testes do componente Recipes', () => {
       expect(cardNameEl1).toHaveTextContent('Corba');
 
       const cardNameEl12 = await screen.findByTestId(cardName11);
-      expect(cardNameEl12).toHaveTextContent('Kafteji');
+      expect(cardNameEl12).toHaveTextContent('Pancakes');
 
       expect(screen.queryByTestId(cardName12)).not.toBeInTheDocument();
     });
@@ -76,7 +76,7 @@ describe('Testes do componente Recipes', () => {
 
   describe('Testa as funcionalidades do componente Recipes na rota /drinks', () => {
     beforeEach(() => {
-      jest.spyOn(global, 'fetch').mockImplementation(drinksLinkVerification);
+      jest.spyOn(global, 'fetch').mockImplementation(fetchMock);
     });
     test('Ao renderizar o componente, os cards dos produtos aparecem na tela', async () => {
       renderWithRouter(<App />, '/drinks');
@@ -97,7 +97,7 @@ describe('Testes do componente Recipes', () => {
       userEvent.click(ordinaryDrinkBtn1);
 
       await waitFor(() => {
-        expect(screen.getByTestId(cardName0)).toHaveTextContent('155 Belmont');
+        expect(screen.getByTestId(cardName0)).toHaveTextContent('\'57 Chevy with a White License Plate');
       });
 
       const ordinaryDrinkBtn2 = await screen.findByRole('button', { name: 'Cocktail' });

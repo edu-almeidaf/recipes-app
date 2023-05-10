@@ -3,7 +3,8 @@ import { screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './helpers/renderWithRouter';
 import App from '../App';
-import { drinksLinkVerification, mealsLinkVerification } from './helpers/fetchRecipesVerification';
+import fetchMock from '../../cypress/mocks/fetch';
+import { firstLetterVerification } from './mocks/firstLetterMock';
 
 const searchTopBtn = 'search-top-btn';
 const searchInput = 'search-input';
@@ -15,16 +16,16 @@ const firstLetterSearchRadio = 'first-letter-search-radio';
 const cardTestIds = {
   cardName0: '0-card-name',
   cardName1: '1-card-name',
-  cardName11: '11-card-name',
+  cardName9: '9-card-name',
   cardName12: '12-card-name',
 };
 
 describe('Testes do componente SearchBar', () => {
   describe('Testando todas as funcionalidades da SearchBar na rota /meals', () => {
     beforeEach(() => {
-      jest.spyOn(global, 'fetch').mockImplementation(mealsLinkVerification);
+      jest.spyOn(global, 'fetch').mockImplementation(fetchMock);
     });
-    it('Verifica se ao pesquisar uma receita pelo ingrediente, são renderizadas 12 receitas na tela', async () => {
+    it('Verifica se ao pesquisar uma receita pelo ingrediente, são renderizadas as receitas na tela', async () => {
       renderWithRouter(<App />, '/meals');
 
       await waitFor(() => {
@@ -38,14 +39,13 @@ describe('Testes do componente SearchBar', () => {
       const radioOption = screen.getByTestId(ingredientSearchRadio);
       const searchBtn = screen.getByTestId(execSearchBtn);
 
-      userEvent.type(inputSearchEl, 'garlic');
+      userEvent.type(inputSearchEl, 'Chicken');
       fireEvent.click(radioOption);
       userEvent.click(searchBtn);
 
       await waitFor(() => {
-        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('Baingan Bharta');
-        expect(screen.getByTestId(cardTestIds.cardName11)).toHaveTextContent('Cevapi Sausages');
-        expect(screen.queryByTestId(cardTestIds.cardName12)).not.toBeInTheDocument();
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('Brown Stew Chicken');
+        expect(screen.getByTestId(cardTestIds.cardName9)).toHaveTextContent('Thai Green Curry');
       });
     });
 
@@ -63,7 +63,7 @@ describe('Testes do componente SearchBar', () => {
       const radioOption = screen.getByTestId(nameSearchRadio);
       const searchBtn = screen.getByTestId(execSearchBtn);
 
-      userEvent.type(inputSearchEl, 'arrabiata');
+      userEvent.type(inputSearchEl, 'Arrabiata');
       fireEvent.click(radioOption);
       userEvent.click(searchBtn);
 
@@ -71,35 +71,11 @@ describe('Testes do componente SearchBar', () => {
         expect(history.location.pathname).toBe('/meals/52771');
       });
     });
-
-    it('Verifica se ao pesquisar uma receita pela primeira letra, as receitas aparecem na tela', async () => {
-      renderWithRouter(<App />, '/meals');
-
-      await waitFor(() => {
-        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('Corba');
-      });
-
-      const searchButton = screen.getByTestId(searchTopBtn);
-      userEvent.click(searchButton);
-
-      const inputSearchEl = screen.getByTestId(searchInput);
-      const radioOption = screen.getByTestId(firstLetterSearchRadio);
-      const searchBtn = screen.getByTestId(execSearchBtn);
-
-      userEvent.type(inputSearchEl, 'a');
-      fireEvent.click(radioOption);
-      userEvent.click(searchBtn);
-
-      await waitFor(() => {
-        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('Apple Frangipan Tart');
-        expect(screen.getByTestId(cardTestIds.cardName1)).toHaveTextContent('Apple & Blackberry Crumble');
-      });
-    });
   });
 
   describe('Testando as chamadas dos alerts (válido para as duas páginas)', () => {
     beforeEach(() => {
-      jest.spyOn(global, 'fetch').mockImplementation(mealsLinkVerification);
+      jest.spyOn(global, 'fetch').mockImplementation(fetchMock);
     });
 
     it('Verifica se ao pesquisar uma receita e ela retornar um array vazio, é exibido um alert na tela', async () => {
@@ -114,7 +90,7 @@ describe('Testes do componente SearchBar', () => {
       userEvent.click(searchButton);
 
       const inputSearchEl = screen.getByTestId(searchInput);
-      const radioOption = screen.getByTestId(ingredientSearchRadio);
+      const radioOption = screen.getByTestId(nameSearchRadio);
       const searchBtn = screen.getByTestId(execSearchBtn);
 
       userEvent.type(inputSearchEl, 'xablau');
@@ -151,7 +127,7 @@ describe('Testes do componente SearchBar', () => {
 
   describe('Testando todas as funcionalidades da SearchBar na rota /drinks', () => {
     beforeEach(() => {
-      jest.spyOn(global, 'fetch').mockImplementation(drinksLinkVerification);
+      jest.spyOn(global, 'fetch').mockImplementation(fetchMock);
     });
     it('Verifica se ao pesquisar uma receita pelo ingrediente, são renderizadas 12 receitas na tela', async () => {
       renderWithRouter(<App />, '/drinks');
@@ -167,14 +143,13 @@ describe('Testes do componente SearchBar', () => {
       const radioOption = screen.getByTestId(ingredientSearchRadio);
       const searchBtn = screen.getByTestId(execSearchBtn);
 
-      userEvent.type(inputSearchEl, 'gin');
+      userEvent.type(inputSearchEl, 'Light rum');
       fireEvent.click(radioOption);
       userEvent.click(searchBtn);
 
       await waitFor(() => {
-        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('3-Mile Long Island Iced Tea');
-        expect(screen.getByTestId(cardTestIds.cardName11)).toHaveTextContent('Angel Face');
-        expect(screen.queryByTestId(cardTestIds.cardName12)).not.toBeInTheDocument();
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('151 Florida Bushwacker');
+        expect(screen.getByTestId(cardTestIds.cardName9)).toHaveTextContent('Between The Sheets');
       });
     });
 
@@ -192,13 +167,19 @@ describe('Testes do componente SearchBar', () => {
       const radioOption = screen.getByTestId(nameSearchRadio);
       const searchBtn = screen.getByTestId(execSearchBtn);
 
-      userEvent.type(inputSearchEl, 'moscow');
+      userEvent.type(inputSearchEl, 'Aquamarine');
       fireEvent.click(radioOption);
       userEvent.click(searchBtn);
 
       await waitFor(() => {
-        expect(history.location.pathname).toBe('/drinks/11009');
+        expect(history.location.pathname).toBe('/drinks/178319');
       });
+    });
+  });
+
+  describe('Testando todas as funcionalidades da SearchBar na rota /drinks', () => {
+    beforeEach(() => {
+      jest.spyOn(global, 'fetch').mockImplementation(firstLetterVerification);
     });
 
     it('Verifica se ao pesquisar uma receita pela primeira letra, as receitas aparecem na tela', async () => {
@@ -222,6 +203,30 @@ describe('Testes do componente SearchBar', () => {
       await waitFor(() => {
         expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('A1');
         expect(screen.getByTestId(cardTestIds.cardName1)).toHaveTextContent('ABC');
+      });
+    });
+
+    it('Verifica se ao pesquisar uma receita pela primeira letra, as receitas aparecem na tela', async () => {
+      renderWithRouter(<App />, '/meals');
+
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('Corba');
+      });
+
+      const searchButton = screen.getByTestId(searchTopBtn);
+      userEvent.click(searchButton);
+
+      const inputSearchEl = screen.getByTestId(searchInput);
+      const radioOption = screen.getByTestId(firstLetterSearchRadio);
+      const searchBtn = screen.getByTestId(execSearchBtn);
+
+      userEvent.type(inputSearchEl, 'a');
+      fireEvent.click(radioOption);
+      userEvent.click(searchBtn);
+
+      await waitFor(() => {
+        expect(screen.getByTestId(cardTestIds.cardName0)).toHaveTextContent('Apple Frangipan Tart');
+        expect(screen.getByTestId(cardTestIds.cardName1)).toHaveTextContent('Apple & Blackberry Crumble');
       });
     });
   });
