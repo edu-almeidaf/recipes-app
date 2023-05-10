@@ -63,7 +63,6 @@ function RecipeDetailsDrinks() {
         <h3>Instructions</h3>
         <p data-testid="instructions">{recipe.strInstructions}</p>
       </div>
-
     </div>
   );
 }

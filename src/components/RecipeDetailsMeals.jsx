@@ -76,7 +76,6 @@ function RecipeDetailsMeals() {
           title="video"
         />}
       </div>
-
     </div>
   );
 }
