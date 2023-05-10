@@ -75,7 +75,6 @@ function RecipeDetails() {
   };
 
   const handleDrinksLocalStorage = (inProgressRecipes) => {
-    console.log(recipe);
     let newInProgressRecipes = {};
     if (inProgressRecipes && inProgressRecipes.drinks) {
       newInProgressRecipes = {
