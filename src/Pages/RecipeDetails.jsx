@@ -4,6 +4,7 @@ import { fetchDrink, fetchMeal } from '../services/ApiRecipeDetails';
 import BtnStartRecipe from '../components/BtnStartRecipe';
 import ShareButton from '../components/ShareButton';
 import FavoriteButton from '../components/FavoriteButton';
+import Recommendation from '../components/Recommendation';
 
 const NUMBER_OF_INGREDIENTS = 20;
 
@@ -45,7 +46,7 @@ function RecipeDetailsMeals() {
     };
 
     fetchRecipe();
-  }, [id]);
+  }, [id, location.pathname]);
 
   const cleanYoutubeUrl = (url) => {
     const urlArray = url.split('=');
@@ -147,6 +148,7 @@ function RecipeDetailsMeals() {
           title="video"
         />}
       </div>
+      <Recommendation />
       <BtnStartRecipe handleNameStartContinue={ handleNameStartContinue } />
     </div>
   );
