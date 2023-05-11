@@ -74,9 +74,9 @@ export default function Recipes({ string }) {
             <button
               data-testid={ `${index}-recipe-card` }
               key={ recipe[`id${string}`] }
-              onClick={
-                () => history.push(`${location.pathname}/${recipe[`id${string}`]}`)
-              }
+              onClick={ () => {
+                history.push(`${location.pathname}/${recipe[`id${string}`]}`);
+              } }
             >
               <h3 data-testid={ `${index}-card-name` }>{ recipe[`str${string}`] }</h3>
               <img
