@@ -46,7 +46,7 @@ function RecipeDetails() {
     };
 
     fetchRecipe();
-  }, [id]);
+  }, [id, location.pathname, setIngredients, setRecipe]);
 
   const cleanYoutubeUrl = (url) => {
     const urlArray = url.split('=');
