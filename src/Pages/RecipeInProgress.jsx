@@ -72,9 +72,7 @@ function RecipeInProgress() {
         setCheckedIngredients(initialState);
       }
     }
-  }, [
-    checkedIngredients, id, ingredients, location.pathname, pageWord,
-  ]);
+  }, [ingredients]);
 
   const handleCheckboxChange = (index) => {
     setCheckedIngredients((prevIngredients) => {

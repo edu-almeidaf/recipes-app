@@ -4,6 +4,7 @@ import { createMemoryHistory } from 'history';
 import { render } from '@testing-library/react';
 import Provider from '../../Context/Provider';
 import SearchBarProvider from '../../Context/SearchBarProvider';
+import RecipeProvider from '../../Context/RecipeProvider';
 
 const renderWithRouter = (component, initialRoute = '/') => {
   const history = createMemoryHistory({ initialEntries: [initialRoute] });
@@ -11,7 +12,9 @@ const renderWithRouter = (component, initialRoute = '/') => {
     ...render(
       <Provider>
         <SearchBarProvider>
-          <Router history={ history }>{component}</Router>
+          <RecipeProvider>
+            <Router history={ history }>{component}</Router>
+          </RecipeProvider>
         </SearchBarProvider>
       </Provider>,
     ),
