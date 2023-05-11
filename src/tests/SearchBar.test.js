@@ -6,14 +6,6 @@ import App from '../App';
 import fetchMock from '../../cypress/mocks/fetch';
 import { firstLetterVerification } from './mocks/firstLetterMock';
 
-global.matchMedia = global.matchMedia || function () {
-  return {
-    matches: false,
-    addListener() {},
-    removeListener() {},
-  };
-};
-
 const searchTopBtn = 'search-top-btn';
 const searchInput = 'search-input';
 const ingredientSearchRadio = 'ingredient-search-radio';
