@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
-import '../styles/Recommendation.css';
 
 import {
   fetchRecomendationDrinks,
