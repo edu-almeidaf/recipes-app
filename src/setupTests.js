@@ -4,8 +4,7 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
 
-// eslint-disable-next-line func-names
-global.matchMedia = global.matchMedia || function () {
+global.matchMedia = global.matchMedia || function t() {
   return {
     matches: false,
     addListener() {},
