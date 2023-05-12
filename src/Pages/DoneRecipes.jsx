@@ -1,8 +1,12 @@
 import Header from '../components/Header';
+import CardDoneRecipes from '../components/CardDoneRecipes';
 
 function DoneRecipes() {
   return (
-    <Header title="Done Recipes" showSearchIcon={ false } />
+    <div>
+      <Header title="Done Recipes" showSearchIcon={ false } />
+      <CardDoneRecipes />
+    </div>
   );
 }
 

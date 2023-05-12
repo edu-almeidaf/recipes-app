@@ -21,10 +21,9 @@ function Recommendation() {
   const [recommended, setRecommended] = useState([]);
   const history = useHistory();
   const { location } = history;
+  const { pathname } = location;
 
   useEffect(() => {
-    const { pathname } = location;
-
     const getFetch = async () => {
       if (pathname.includes('meals')) {
         const fetchRecommendationDrinks = await fetchRecomendationDrinks();
@@ -37,7 +36,7 @@ function Recommendation() {
       }
     };
     getFetch();
-  }, [location]);
+  }, [pathname]);
 
   return (
     <section>
@@ -51,7 +50,8 @@ function Recommendation() {
               data-testid={ `${index}-recommendation-card` }
             >
               <img
-                src={ recommendation?.strMealThumb }
+                src={ pathname.includes('drinks') ? recommendation?.strMealThumb
+                  : recommendation?.strDrinkThumb }
                 alt={ recommendation?.strTags }
 
               />
