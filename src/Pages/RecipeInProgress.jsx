@@ -49,7 +49,6 @@ function RecipeInProgress() {
 
   useEffect(() => {
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
-    console.log(inProgressRecipes);
     const inProgressKey = `inProgress${pageWord}s`;
     const recipeId = id;
 

@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ShareButton from './ShareButton';
 
-export default function CardIndividualRecipe({ recipe, index }) {
+export default function DoneRecipeCard({ recipe, index }) {
   const [ShowMessage, setShowMessage] = useState(false);
   const handleUrl = () => {
     const url = recipe.type === 'meal' ? `http://localhost:3000/meals/${recipe.id}` : `http://localhost:3000/drinks/${recipe.id}`;
     return url;
   };
-  console.log(window.location);
   return (
     <div key={ index }>
       <Link to={ `/${recipe.type}s/${recipe.id}` }>
@@ -58,7 +57,7 @@ export default function CardIndividualRecipe({ recipe, index }) {
 
   );
 }
-CardIndividualRecipe.propTypes = {
+DoneRecipeCard.propTypes = {
   recipe: PropTypes.shape({
     id: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
