@@ -18,7 +18,8 @@ function BtnStartRecipe({ handleNameStartContinue }) {
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const verifyDoneRecipe = JSON.parse(localStorage.getItem('doneRecipes'));
     verifyDoneRecipe?.forEach((recipe) => {
-      if (recipe.id === Number(id)) {
+      if (Number(recipe.id) === Number(id)) {
+        console.log('Entrou no if');
         setDoneRecipe(true);
       }
     });

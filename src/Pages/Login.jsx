@@ -6,6 +6,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [enable, setEnabled] = useState(true);
+
   useEffect(() => {
     const validator = () => {
       const regularExpression = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -16,6 +17,7 @@ export default function Login() {
   }, [email, password]);
   const handleClick = () => {
     localStorage.setItem('user', JSON.stringify({ email }));
+    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
     history.push('meals');
   };
   return (

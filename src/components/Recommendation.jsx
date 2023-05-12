@@ -53,7 +53,6 @@ function Recommendation() {
                   ? recommendation?.strMealThumb
                   : recommendation?.strDrinkThumb }
                 alt={ recommendation?.strTags }
-
               />
 
               <h3
