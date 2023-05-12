@@ -162,8 +162,6 @@ describe('teste do RecipeDatails meals', () => {
     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
     renderWithRouter(<App />, recipeMealsURL);
 
-    console.log(JSON.parse(localStorage.getItem('doneRecipes')));
-    screen.debug();
     expect(screen.queryByRole('button', { name: /start recipe/i })).not.toBeInTheDocument();
   });
 
@@ -213,6 +211,21 @@ describe('teste do RecipeDatails meals', () => {
 
       userEvent.click(screen.getByTestId(favoriteTestid));
       expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toStrictEqual([]);
+    });
+
+    it('testando se a receita é favoritada entra favoritada na rota drinks', async () => {
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipeDrinks));
+      renderWithRouter(<App />, recipeDrinksURL);
+
+      await waitFor(() => {
+        expect(screen.getByTestId(firstingredient)).toHaveTextContent(drinkRecipe);
+      });
+
+      await waitFor(() => {
+        expect(JSON.parse(localStorage.getItem('favoriteRecipes'))).toStrictEqual(favoriteRecipeDrinks);
+        const favoriteBtn = screen.getByAltText('favorite button');
+        expect(favoriteBtn.src).toBe('http://localhost/blackHeartIcon.svg');
+      });
     });
   });
 });

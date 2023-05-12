@@ -9,15 +9,12 @@ const NUMBER_OF_INGREDIENTS = 20;
 
 function RecipeInProgress() {
   const [recipe, setRecipe, ingredients, setIngredients] = useContext(recipeContext);
-
   const [pageWord, setPageWord] = useState('');
   const [showMessage, setShowMessage] = useState(false);
   const [checkedIngredients, setCheckedIngredients] = useState({});
 
-  const url = window.location.href;
   const history = useHistory();
   const { location } = history;
-
   const { id } = useParams();
 
   useEffect(() => {
@@ -34,7 +31,6 @@ function RecipeInProgress() {
         recipeArray = data.drinks;
       }
       const finalData = recipeArray[0];
-      setRecipe(finalData);
       const ingredientsArray = [];
       for (let index = 1; index <= NUMBER_OF_INGREDIENTS; index += 1) {
         if (finalData[`strIngredient${index}`]) {
@@ -44,14 +40,16 @@ function RecipeInProgress() {
           });
         }
       }
+      setRecipe(finalData);
       setIngredients(ingredientsArray);
     };
 
     fetchRecipe();
-  }, [id, location.pathname, setIngredients, setRecipe]);
+  }, []);
 
   useEffect(() => {
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || {};
+    console.log(inProgressRecipes);
     const inProgressKey = `inProgress${pageWord}s`;
     const recipeId = id;
 
@@ -90,6 +88,47 @@ function RecipeInProgress() {
     });
   };
 
+  const handleUrl = () => {
+    const url = window.location.href;
+    const urlEdit = url.split('/');
+    urlEdit.pop();
+    const newUrl = urlEdit.join('/');
+    return newUrl;
+  };
+
+  const verifyTags = (tags) => {
+    if (tags === null || tags === '') {
+      return [];
+    }
+    const arr = tags.split(',');
+    return arr;
+  };
+
+  const doneRecipe = () => {
+    const doneRecipesStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+
+    const recipeObj = {
+      id: recipe[`id${pageWord}`],
+      type: pageWord.toLowerCase(),
+      nationality: recipe.strArea || '',
+      category: recipe.strCategory || '',
+      alcoholicOrNot: recipe.strAlcoholic || '',
+      name: recipe[`str${pageWord}`],
+      image: recipe[`str${pageWord}Thumb`],
+      doneDate: new Date(),
+      tags: verifyTags(recipe.strTags),
+    };
+
+    let newDoneRecipes = [];
+    if (doneRecipesStorage) {
+      newDoneRecipes = [...doneRecipesStorage, recipeObj];
+    } else {
+      newDoneRecipes = [recipeObj];
+    }
+    localStorage.setItem('doneRecipes', JSON.stringify(newDoneRecipes));
+    history.push('/done-recipes');
+  };
+
   return (
     <>
       <img
@@ -98,7 +137,7 @@ function RecipeInProgress() {
         alt={ recipe[`str${pageWord}`] }
       />
       <h1 data-testid="recipe-title">{recipe[`str${pageWord}`]}</h1>
-      <ShareButton url={ url } onClick={ () => setShowMessage(true) } />
+      <ShareButton url={ handleUrl() } onClick={ () => setShowMessage(true) } />
       {showMessage && <p>Link copied!</p>}
       <FavoriteButton recipe={ recipe } />
       <h2 data-testid="recipe-category">
@@ -119,6 +158,7 @@ function RecipeInProgress() {
           >
             <input
               type="checkbox"
+              data-testid={ `${index}-ingredient-input` }
               name="checkbox"
               onChange={ () => handleCheckboxChange(index) }
               checked={ checkedIngredients[index] || false }
@@ -131,7 +171,15 @@ function RecipeInProgress() {
         </div>
       ))}
 
-      <button data-testid="finish-recipe-btn">Finish</button>
+      <button
+        data-testid="finish-recipe-btn"
+        disabled={
+          !ingredients.every((_ingredient, index) => checkedIngredients[index] === true)
+        }
+        onClick={ doneRecipe }
+      >
+        Finish
+      </button>
     </>
   );
 }

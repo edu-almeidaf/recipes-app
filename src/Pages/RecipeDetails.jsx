@@ -7,7 +7,6 @@ import FavoriteButton from '../components/FavoriteButton';
 import { recipeContext } from '../Context/RecipeProvider';
 import Recommendation from '../components/Recommendation';
 
-
 const NUMBER_OF_INGREDIENTS = 20;
 
 function RecipeDetails() {

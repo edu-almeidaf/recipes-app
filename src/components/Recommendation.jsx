@@ -12,7 +12,7 @@ import {
 const recommendedLength = 6;
 function Recommendation() {
   const settings = {
-    dots: false,
+    dots: true,
     infinite: false,
     speed: 0,
     slidesToShow: 2,
@@ -21,10 +21,9 @@ function Recommendation() {
   const [recommended, setRecommended] = useState([]);
   const history = useHistory();
   const { location } = history;
+  const { pathname } = location;
 
   useEffect(() => {
-    const { pathname } = location;
-
     const getFetch = async () => {
       if (pathname.includes('meals')) {
         const fetchRecommendationDrinks = await fetchRecomendationDrinks();
@@ -32,12 +31,11 @@ function Recommendation() {
       }
       if (pathname.includes('drinks')) {
         const fetchRecommendation = await fetchRecomendationMeals();
-        console.log(fetchRecommendation);
         setRecommended(fetchRecommendation.meals);
       }
     };
     getFetch();
-  }, [location]);
+  }, [pathname]);
 
   return (
     <section>
@@ -51,7 +49,9 @@ function Recommendation() {
               data-testid={ `${index}-recommendation-card` }
             >
               <img
-                src={ recommendation?.strMealThumb }
+                src={ pathname.includes('drinks')
+                  ? recommendation?.strMealThumb
+                  : recommendation?.strDrinkThumb }
                 alt={ recommendation?.strTags }
 
               />
