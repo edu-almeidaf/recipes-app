@@ -17,7 +17,7 @@ function ShareButton({ url, onClick, dataTestId = 'share-btn' }) {
 ShareButton.propTypes = {
   url: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  dataTestId: PropTypes.string.isRequired,
+  dataTestId: PropTypes.string,
 };
 
 export default ShareButton;

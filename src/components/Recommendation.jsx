@@ -12,7 +12,7 @@ import {
 const recommendedLength = 6;
 function Recommendation() {
   const settings = {
-    dots: false,
+    dots: true,
     infinite: false,
     speed: 0,
     slidesToShow: 2,
@@ -31,7 +31,6 @@ function Recommendation() {
       }
       if (pathname.includes('drinks')) {
         const fetchRecommendation = await fetchRecomendationMeals();
-        console.log(fetchRecommendation);
         setRecommended(fetchRecommendation.meals);
       }
     };
@@ -50,10 +49,10 @@ function Recommendation() {
               data-testid={ `${index}-recommendation-card` }
             >
               <img
-                src={ pathname.includes('drinks') ? recommendation?.strMealThumb
+                src={ pathname.includes('drinks')
+                  ? recommendation?.strMealThumb
                   : recommendation?.strDrinkThumb }
                 alt={ recommendation?.strTags }
-
               />
 
               <h3

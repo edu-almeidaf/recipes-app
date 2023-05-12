@@ -5,11 +5,14 @@ import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import SearchBarProvider from './Context/SearchBarProvider';
+import RecipeProvider from './Context/RecipeProvider';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <SearchBarProvider>
-      <App />
+      <RecipeProvider>
+        <App />
+      </RecipeProvider>
     </SearchBarProvider>
   </BrowserRouter>,
 );

@@ -17,10 +17,8 @@ function BtnStartRecipe({ handleNameStartContinue }) {
     const { pathname } = location;
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const verifyDoneRecipe = JSON.parse(localStorage.getItem('doneRecipes'));
-    console.log(verifyDoneRecipe);
     verifyDoneRecipe?.forEach((recipe) => {
       if (Number(recipe.id) === Number(id)) {
-        console.log('Entrou no if');
         setDoneRecipe(true);
       }
     });
