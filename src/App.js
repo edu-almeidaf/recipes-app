@@ -11,8 +11,75 @@ import RecipeDetails from './Pages/RecipeDetails';
 import RecipeInProgress from './Pages/RecipeInProgress';
 
 function App() {
+  const [theme, setTheme] = React.useState('retro');
+
+  const handleRetro = () => {
+    setTheme('retro');
+  };
+
+  const handleDark = () => {
+    setTheme('dark');
+  };
+
+  const handleValentine = () => {
+    setTheme('valentine');
+  };
+
+  const handleAutumn = () => {
+    setTheme('autumn');
+  };
+
+  const handlePastel = () => {
+    setTheme('pastel');
+  };
+
+  const handleLuxury = () => {
+    setTheme('luxury');
+  };
   return (
-    <div className="container">
+    <div
+      className="container"
+      data-theme={ theme }
+    >
+      <div className="flex justify-center flex-wrap">
+        <button
+          className="btn btn-primary m-4"
+          onClick={ handleRetro }
+        >
+          retro
+        </button>
+        <button
+          className="btn btn-primary m-4"
+          onClick={ handleDark }
+        >
+          dark
+        </button>
+        <button
+          className="btn btn-primary m-4"
+          onClick={ handleValentine }
+        >
+          valentine
+        </button>
+        <button
+          className="btn btn-primary m-4"
+          onClick={ handleAutumn }
+        >
+          autumn
+        </button>
+        <button
+          className="btn btn-primary m-4"
+          onClick={ handlePastel }
+        >
+          pastel
+        </button>
+        <button
+          className="btn btn-primary m-4"
+          onClick={ handleLuxury }
+        >
+          luxury
+        </button>
+      </div>
+
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route exact path="/meals" component={ Meals } />

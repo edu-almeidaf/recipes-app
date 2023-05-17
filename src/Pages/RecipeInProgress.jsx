@@ -130,55 +130,92 @@ function RecipeInProgress() {
 
   return (
     <>
-      <img
-        data-testid="recipe-photo"
-        src={ recipe[`str${pageWord}Thumb`] }
-        alt={ recipe[`str${pageWord}`] }
-      />
-      <h1 data-testid="recipe-title">{recipe[`str${pageWord}`]}</h1>
-      <ShareButton url={ handleUrl() } onClick={ () => setShowMessage(true) } />
-      {showMessage && <p>Link copied!</p>}
-      <FavoriteButton recipe={ recipe } />
-      <h2 data-testid="recipe-category">
-        {pageWord === 'Meal' ? recipe.strCategory : recipe.strAlcoholic}
-      </h2>
-      <h3>Instructions</h3>
-      <p data-testid="instructions">{recipe.strInstructions}</p>
-
-      {ingredients.map((item, index) => (
-        <div key={ item.ingredient }>
-          <label
-            data-testid={ `${index}-ingredient-step` }
-            style={
-              checkedIngredients[index]
-                ? { textDecoration: 'line-through solid rgb(0, 0, 0)' }
-                : {}
-            }
-          >
-            <input
-              type="checkbox"
-              data-testid={ `${index}-ingredient-input` }
-              name="checkbox"
-              onChange={ () => handleCheckboxChange(index) }
-              checked={ checkedIngredients[index] || false }
-            />
-            {item.ingredient}
-            {' '}
-            {item.measure}
-          </label>
-          <br />
-        </div>
-      ))}
-
-      <button
-        data-testid="finish-recipe-btn"
-        disabled={
-          !ingredients.every((_ingredient, index) => checkedIngredients[index] === true)
-        }
-        onClick={ doneRecipe }
+      <div
+        className="flex justify-between bg-primary-focus shadow-lg p-4 text-accent"
       >
-        Finish
-      </button>
+        <div>
+          <ShareButton url={ handleUrl() } onClick={ () => setShowMessage(true) } />
+          {showMessage && <p>Link copied!</p>}
+          <FavoriteButton recipe={ recipe } />
+        </div>
+        <h1
+          className="text-6xl"
+          data-testid="recipe-title"
+        >
+          {recipe[`str${pageWord}`]}
+
+        </h1>
+        <h5>.</h5>
+      </div>
+      <div
+        className="flex justify-center"
+      >
+        <div
+          className="card w-96 bg-base-100 shadow-xl"
+        >
+          <img
+            className="card w-56 bg-base-100 shadow-xl"
+            width={ 100 }
+            data-testid="recipe-photo"
+            src={ recipe[`str${pageWord}Thumb`] }
+            alt={ recipe[`str${pageWord}`] }
+          />
+          <div
+            className="card-body"
+          >
+            {/* <h2
+              data-testid="recipe-category"
+              className="card-title"
+            >
+              {pageWord === 'Meal' ? recipe.strCategory : recipe.strAlcoholic}
+            </h2> */}
+            <h3
+              className="card-title"
+            >
+              Instructions
+            </h3>
+            <p data-testid="instructions">{recipe.strInstructions}</p>
+            {ingredients.map((item, index) => (
+              <div key={ item.ingredient }>
+                <label
+                  data-testid={ `${index}-ingredient-step` }
+                  style={
+                    checkedIngredients[index]
+                      ? { textDecoration: 'line-through solid rgb(0, 0, 0)' }
+                      : {}
+                  }
+                >
+                  <input
+                    type="checkbox"
+                    data-testid={ `${index}-ingredient-input` }
+                    name="checkbox"
+                    onChange={ () => handleCheckboxChange(index) }
+                    checked={ checkedIngredients[index] || false }
+                  />
+                  {item.ingredient}
+                  {' '}
+                  {item.measure}
+                </label>
+                <br />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div
+        className="flex justify-center"
+      >
+        <button
+          className="btn btn-info m-2"
+          data-testid="finish-recipe-btn"
+          disabled={
+            !ingredients.every((_ingredient, index) => checkedIngredients[index] === true)
+          }
+          onClick={ doneRecipe }
+        >
+          Finish
+        </button>
+      </div>
     </>
   );
 }

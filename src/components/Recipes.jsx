@@ -51,7 +51,9 @@ export default function Recipes({ string }) {
 
   return (
     <>
-      <div>
+      <div
+        className="flex justify-center flex-wrap"
+      >
         {
           categories.map((category) => (
             <CategoryButton
@@ -62,29 +64,46 @@ export default function Recipes({ string }) {
           ))
         }
         <button
+          className="btn w-36 btn-outline btn-primary shadow-xl m-1 p-2 text-center"
           data-testid="All-category-filter"
           onClick={ resetFilters }
         >
           All
         </button>
       </div>
-      <div className="recipes-container">
+      <div
+        className="flex flex-wrap justify-center"
+      >
         {
           apiData.map((recipe, index) => (
             <button
+              className="recipes-container
+      card shadow-lg m-2 p-4 btn-outline btn-accent w-48"
               data-testid={ `${index}-recipe-card` }
               key={ recipe[`id${string}`] }
               onClick={ () => {
                 history.push(`${location.pathname}/${recipe[`id${string}`]}`);
               } }
             >
-              <h3 data-testid={ `${index}-card-name` }>{ recipe[`str${string}`] }</h3>
-              <img
-                src={ recipe[`str${string}Thumb`] }
-                alt={ recipe[`str${string}`] }
-                className="card-recipe-img"
-                data-testid={ `${index}-card-img` }
-              />
+              <figure>
+                <img
+                  src={ recipe[`str${string}Thumb`] }
+                  alt={ recipe[`str${string}`] }
+                  className="card-recipe-img"
+                  data-testid={ `${index}-card-img` }
+                />
+              </figure>
+
+              <div
+                className="card-body"
+              >
+                <h3
+                  data-testid={ `${index}-card-name` }
+                  className="card-title"
+                >
+                  { recipe[`str${string}`] }
+                </h3>
+              </div>
             </button>
           ))
         }

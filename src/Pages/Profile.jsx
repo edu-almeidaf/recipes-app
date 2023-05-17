@@ -16,9 +16,12 @@ function Profile() {
   return (
     <div>
       <Header title="Profile" showSearchIcon={ false } />
-      <div>
+      <div
+        className="card-side bg-base-100 shadow-xl text-info text-center"
+      >
         <p data-testid="profile-email">{`Bem vindo, usuário ${emailUser?.email}`}</p>
         <button
+          className="btn w-36 btn-outline btn-primary shadow-xl m-1 p-2 text-center"
           data-testid="profile-done-btn"
           onClick={ handleDoneRecipes }
         >
@@ -26,13 +29,21 @@ function Profile() {
 
         </button>
         <button
+          className="btn w-36 btn-outline btn-primary shadow-xl m-1 p-2 text-center"
           data-testid="profile-favorite-btn"
           onClick={ handleFavorites }
         >
           Favorite Recipes
 
         </button>
-        <button data-testid="profile-logout-btn" onClick={ handleLogout }>Logout</button>
+        <button
+          className="btn w-36 btn-outline btn-primary shadow-xl m-1 p-2 text-center"
+          data-testid="profile-logout-btn"
+          onClick={ handleLogout }
+        >
+          Logout
+
+        </button>
       </div>
       <Footer />
     </div>

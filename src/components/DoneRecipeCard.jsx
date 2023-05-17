@@ -10,28 +10,29 @@ export default function DoneRecipeCard({ recipe, index }) {
     return url;
   };
   return (
-    <div key={ index }>
-      <Link to={ `/${recipe.type}s/${recipe.id}` }>
-        <h3 data-testid={ `${index}-horizontal-name` }>
-          { `${recipe.name}` }
-        </h3>
-      </Link>
-      <Link to={ `/${recipe.type}s/${recipe.id}` }>
-        <img
-          data-testid={ `${index}-horizontal-image` }
-          src={ recipe.image }
-          alt="imagem da receita"
-          height="100"
-          width="150"
-        />
-      </Link>
-      <ShareButton
-        url={ handleUrl() }
-        onClick={ () => setShowMessage(true) }
-        dataTestId={ `${index}-horizontal-share-btn` }
-      />
-      {ShowMessage && <p>Link copied!</p>}
+    <div
+      key={ index }
+    >
+      <div
+        className="card shadow-lg m-2 p-4 btn-outline btn-info w-48"
+      >
+        <Link to={ `/${recipe.type}s/${recipe.id}` }>
+          <h3 data-testid={ `${index}-horizontal-name` }>
+            { `${recipe.name}` }
+          </h3>
+        </Link>
+        <Link to={ `/${recipe.type}s/${recipe.id}` }>
+          <img
+            data-testid={ `${index}-horizontal-image` }
+            src={ recipe.image }
+            alt="imagem da receita"
+            height="100"
+            width="150"
+          />
+        </Link>
+      </div>
       <p
+        className="btn w-36 btn-outline btn-primary shadow-xl m-1 p-2 text-center"
         data-testid={ `${index}-horizontal-top-text` }
       >
         {
@@ -40,10 +41,19 @@ export default function DoneRecipeCard({ recipe, index }) {
             : `${recipe.alcoholicOrNot}`
         }
       </p>
-      <p data-testid={ `${index}-horizontal-done-date` }>
+      <ShareButton
+        url={ handleUrl() }
+        onClick={ () => setShowMessage(true) }
+        dataTestId={ `${index}-horizontal-share-btn` }
+      />
+      {ShowMessage && <p>Link copied!</p>}
+      {/* <p
+        className="btn w-96 btn-primary shadow-xl m-1 p-2 text-center"
+        data-testid={ `${index}-horizontal-done-date` }
+      >
         { `Done in: ${recipe.doneDate}` }
-      </p>
-      {
+      </p> */}
+      {/* {
         recipe.type === 'meal'
         && recipe.tags.map((tag) => (
           <p
@@ -52,7 +62,7 @@ export default function DoneRecipeCard({ recipe, index }) {
           >
             { tag }
           </p>))
-      }
+      } */}
     </div>
 
   );

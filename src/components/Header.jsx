@@ -22,8 +22,12 @@ function Header({ title, showSearchIcon }) {
   };
 
   return (
-    <>
-      <button onClick={ goToProfilePage }>
+    <header className="flex justify-stretch bg-primary-focus shadow-lg p-4">
+      <button
+        onClick={ goToProfilePage }
+        className="btn m-2 btn-accent"
+      >
+
         <img
           src={ profileIcon }
           alt="profile icon"
@@ -33,7 +37,10 @@ function Header({ title, showSearchIcon }) {
 
       {
         showSearchIcon && (
-          <button onClick={ toggleSearchBarInput }>
+          <button
+            onClick={ toggleSearchBarInput }
+            className="btn m-2 btn-accent"
+          >
             <img
               src={ searchIcon }
               alt="profile icon"
@@ -42,13 +49,13 @@ function Header({ title, showSearchIcon }) {
           </button>
         )
       }
-      <h1 data-testid="page-title">{title}</h1>
+      {/* <h1 data-testid="page-title">{title}</h1> */}
       {
         toggleSearchBar && (
           <SearchBar />
         )
       }
-    </>
+    </header>
   );
 }
 

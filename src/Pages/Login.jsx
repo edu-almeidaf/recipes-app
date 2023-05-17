@@ -20,14 +20,16 @@ export default function Login() {
     history.push('meals');
   };
   return (
-    <div>
+    <form className="flex items-center justify-center w-full">
       <input
+        className="input input-bordered input-info w-full max-w-xs mr-4"
         type="email"
         data-testid="email-input"
         value={ email }
         onChange={ (e) => setEmail(e.target.value) }
       />
       <input
+        className="input input-bordered input-info w-full max-w-xs"
         type="password"
         data-testid="password-input"
         value={ password }
@@ -35,6 +37,7 @@ export default function Login() {
         onChange={ (e) => setPassword(e.target.value) }
       />
       <button
+        className="btn btn-primary m-2"
         data-testid="login-submit-btn"
         disabled={ enable }
         onClick={ handleClick }
@@ -42,6 +45,6 @@ export default function Login() {
         Enter
 
       </button>
-    </div>
+    </form>
   );
 }

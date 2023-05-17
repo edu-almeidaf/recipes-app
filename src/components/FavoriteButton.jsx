@@ -43,11 +43,15 @@ function FavoriteButton({ recipe }) {
 
   return (
     <button
+      className="shadow-xl m-1 btn  btn-accent"
       data-testid="favorite-btn"
       onClick={ isFavorite ? handleRemoveFavoriteClick : handleFavoriteClick }
       src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
     >
-      <img src={ isFavorite ? blackHeartIcon : whiteHeartIcon } alt="favorite button" />
+      <img
+        src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+        alt="favorite button"
+      />
     </button>
   );
 }

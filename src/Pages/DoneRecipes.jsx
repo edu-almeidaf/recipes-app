@@ -31,6 +31,7 @@ export default function DoneRecipes() {
       <Header title="Done Recipes" showSearchIcon={ false } />
       <div>
         <button
+          className="btn w-36 btn-outline btn-primary shadow-xl m-1 p-2 text-center"
           type="button"
           data-testid="filter-by-all-btn"
           onClick={ () => filterRecipes('all') }
@@ -38,6 +39,7 @@ export default function DoneRecipes() {
           All
         </button>
         <button
+          className="btn w-36 btn-outline btn-primary shadow-xl m-1 p-2 text-center"
           type="button"
           data-testid="filter-by-meal-btn"
           onClick={ () => filterRecipes('meals') }
@@ -45,6 +47,7 @@ export default function DoneRecipes() {
           Meals
         </button>
         <button
+          className="btn w-36 btn-outline btn-primary shadow-xl m-1 p-2 text-center"
           type="button"
           data-testid="filter-by-drink-btn"
           onClick={ () => filterRecipes('drinks') }

@@ -40,13 +40,15 @@ function BtnStartRecipe({ handleNameStartContinue }) {
   }, [location, id]);
 
   return (
-    <section>
+    <section
+      className="flex justify-center"
+    >
       {
         !doneRecipe && (
           <button
             type="button"
-            data-testid="start-recipe-btn"
-            className="start-recipe-btn"
+            data-testid="start-recipe-btn "
+            className="start-recipe-btn btn btn-info mb-2"
             onClick={ handleNameStartContinue }
           >
             {nameStartContinue}

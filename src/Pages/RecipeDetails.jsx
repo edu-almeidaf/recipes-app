@@ -114,39 +114,82 @@ function RecipeDetails() {
   return (
     <div>
       <div>
-        <h1 data-testid="recipe-title">{recipe[`str${pageWord}`]}</h1>
-        <ShareButton url={ url } onClick={ () => setShowMessage(true) } />
-        {showMessage && <p>Link copied!</p>}
-        <FavoriteButton recipe={ recipe } />
-        <img
-          data-testid="recipe-photo"
-          src={ recipe[`str${pageWord}Thumb`] }
-          alt={ recipe[`str${pageWord}`] }
-        />
-        <h2 data-testid="recipe-category">
-          {pageWord === 'Meal' ? recipe.strCategory : recipe.strAlcoholic}
-        </h2>
-        <h3>Ingredientes</h3>
-        <ul>
-          { ingredients.map((item, index) => (
-            <li
-              key={ item.ingredient }
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              {item.ingredient}
-              {' '}
-              {item.measure}
-            </li>
-          ))}
-        </ul>
-        <h3>Instructions</h3>
-        <p data-testid="instructions">{recipe.strInstructions}</p>
+        <div
+          className="flex justify-between bg-primary-focus shadow-lg p-4 text-accent"
+        >
+          <div>
+            <ShareButton url={ url } onClick={ () => setShowMessage(true) } />
+            {showMessage && <p>Link copied!</p>}
+            <FavoriteButton recipe={ recipe } />
+          </div>
+          <h1
+            className="text-6xl"
+            data-testid="recipe-title"
+          >
+            {recipe[`str${pageWord}`]}
 
-        {recipe.strYoutube && <iframe
-          data-testid="video"
-          src={ `https://www.youtube.com/embed/watch?v=${cleanYoutubeUrl(recipe.strYoutube)}` }
-          title="video"
-        />}
+          </h1>
+          <h5>.</h5>
+        </div>
+        <div
+          className="card card-side bg-base-100 shadow-xl flex flex-wrap justify-center"
+        >
+          <img
+            width={ 200 }
+            data-testid="recipe-photo"
+            src={ recipe[`str${pageWord}Thumb`] }
+            alt={ recipe[`str${pageWord}`] }
+          />
+          {/* <h2 data-testid="recipe-category">
+            {pageWord === 'Meal' ? recipe.strCategory : recipe.strAlcoholic}
+          </h2> */}
+          <div
+            className="card-body"
+          >
+            <h3
+              className="card-title"
+            >
+              Ingredientes
+            </h3>
+            <ul>
+              { ingredients.map((item, index) => (
+                <li
+                  key={ item.ingredient }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {item.ingredient}
+                  {' '}
+                  {item.measure}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div
+            className="card-body"
+          >
+            <h3
+              className="card-title"
+            >
+              Instructions
+            </h3>
+            <p data-testid="instructions">{recipe.strInstructions}</p>
+          </div>
+          {recipe.strYoutube && <iframe
+            data-testid="video"
+            src={ `https://www.youtube.com/embed/watch?v=${cleanYoutubeUrl(recipe.strYoutube)}` }
+            title="video"
+          />}
+        </div>
+
+      </div>
+      <div
+        className="flex justify-center mt-3"
+      >
+        <h1
+          className="card-title"
+        >
+          Recomendações
+        </h1>
       </div>
       <Recommendation />
       <BtnStartRecipe handleNameStartContinue={ handleNameStartContinue } />

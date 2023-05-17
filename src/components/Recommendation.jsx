@@ -12,7 +12,7 @@ import {
 const recommendedLength = 6;
 function Recommendation() {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: false,
     speed: 0,
     slidesToShow: 2,
@@ -38,34 +38,46 @@ function Recommendation() {
   }, [pathname]);
 
   return (
-    <section>
-      <h1>Recomendações</h1>
-      <Slider { ...settings }>
-        {recommended && recommended
-          .filter((_item, index) => index < recommendedLength)
-          .map((recommendation, index) => (
-            <div
-              key={ index }
-              data-testid={ `${index}-recommendation-card` }
-            >
-              <img
-                src={ pathname.includes('drinks')
-                  ? recommendation?.strMealThumb
-                  : recommendation?.strDrinkThumb }
-                alt={ recommendation?.strTags }
-              />
+    <section
+      className="flex justify-center m-4"
+    >
+      {/* <h1
+        className="card-title"
+      >
+        Recomendações
 
-              <h3
-                data-testid={ `${index}-recommendation-title` }
-
+      </h1> */}
+      <div
+        className="card w-96 bg-base-100 shadow-xl"
+      >
+        <Slider { ...settings }>
+          {recommended && recommended
+            .filter((_item, index) => index < recommendedLength)
+            .map((recommendation, index) => (
+              <div
+                key={ index }
+                data-testid={ `${index}-recommendation-card` }
               >
-                {recommendation?.strMeal
-                  ? recommendation?.strMeal
-                  : recommendation?.strDrink}
-              </h3>
-            </div>
-          ))}
-      </Slider>
+                <figure>
+                  <img
+                    className="border-e-4 "
+                    src={ pathname.includes('drinks')
+                      ? recommendation?.strMealThumb
+                      : recommendation?.strDrinkThumb }
+                    alt={ recommendation?.strTags }
+                  />
+                </figure>
+                {/* <h3
+                  data-testid={ `${index}-recommendation-title` }
+                >
+                  {recommendation?.strMeal
+                    ? recommendation?.strMeal
+                    : recommendation?.strDrink}
+                </h3> */}
+              </div>
+            ))}
+        </Slider>
+      </div>
     </section>
   );
 }

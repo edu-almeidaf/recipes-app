@@ -61,8 +61,12 @@ export default function SearchBar() {
   };
 
   return (
-    <form className="SearchBar" onSubmit={ handleSearchSubmit }>
+    <form
+      className="SearchBar w-full"
+      onSubmit={ handleSearchSubmit }
+    >
       <input
+        className="input input-bordered input-info w-full max-w-xs m-2"
         type="text"
         name="searchInput"
         placeholder="Search"
@@ -71,8 +75,12 @@ export default function SearchBar() {
         onChange={ ({ target }) => setSearchInput(target.value) }
       />
 
-      <label htmlFor="ingredient-radio">
+      <label
+        htmlFor="ingredient-radio"
+        className="text-info m-2"
+      >
         <input
+          className="radio radio-info mr-2"
           type="radio"
           name="searchInformationRadio"
           id="ingredient-radio"
@@ -83,8 +91,12 @@ export default function SearchBar() {
         Ingredient
       </label>
 
-      <label htmlFor="name-radio">
+      <label
+        htmlFor="name-radio"
+        className="text-info m-2"
+      >
         <input
+          className="radio radio-info mr-2"
           type="radio"
           name="searchInformationRadio"
           id="name-radio"
@@ -95,8 +107,12 @@ export default function SearchBar() {
         Name
       </label>
 
-      <label htmlFor="first-letter-radio">
+      <label
+        htmlFor="first-letter-radio"
+        className="text-info m-2"
+      >
         <input
+          className="radio radio-info mr-2"
           type="radio"
           name="searchInformationRadio"
           id="first-letter-radio"
@@ -108,6 +124,7 @@ export default function SearchBar() {
       </label>
 
       <button
+        className="text-info m-2"
         type="submit"
         data-testid="exec-search-btn"
         disabled={ searchInformationRadio === '' }

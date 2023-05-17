@@ -19,9 +19,10 @@ function Footer() {
   return (
     <footer
       data-testid="footer"
-      className="footer"
+      className="footer flex m-5"
     >
       <button
+        className="btn btn-outline btn-info"
         onClick={ handleDrinksRoute }
       >
         <img
@@ -33,6 +34,7 @@ function Footer() {
       </button>
 
       <button
+        className="btn btn-outline btn-info"
         onClick={ handleFoodRoute }
       >
         <img
@@ -40,7 +42,7 @@ function Footer() {
           alt="Icon Meal"
           src={ mealIcon }
         />
-        Comidas
+        Meals
       </button>
 
     </footer>

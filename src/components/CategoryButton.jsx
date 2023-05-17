@@ -31,14 +31,17 @@ export default function CategoryButton({ category, resetFilters }) {
   };
 
   return (
-    <button
-      type="button"
-      key={ category.strCategory }
-      data-testid={ `${category.strCategory}-category-filter` }
-      onClick={ handleClick }
-    >
-      {category.strCategory}
-    </button>
+    <div>
+      <button
+        className="btn w-36 btn-outline btn-primary shadow-xl m-1 p-2 text-center"
+        type="button"
+        key={ category.strCategory }
+        data-testid={ `${category.strCategory}-category-filter` }
+        onClick={ handleClick }
+      >
+        {category.strCategory}
+      </button>
+    </div>
   );
 }
 

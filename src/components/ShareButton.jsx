@@ -8,7 +8,12 @@ function ShareButton({ url, onClick, dataTestId = 'share-btn' }) {
     onClick();
   };
   return (
-    <button data-testid={ dataTestId } onClick={ copyToClipboard } src={ shareIcon }>
+    <button
+      className="m-2 btn btn-accent"
+      data-testid={ dataTestId }
+      onClick={ copyToClipboard }
+      src={ shareIcon }
+    >
       <img src={ shareIcon } alt="share icon" />
     </button>
   );
